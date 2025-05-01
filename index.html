@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Awareness</title>
+    <link rel="stylesheet" href="./resources/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./resources/app.css">
+    <link rel="icon" href="./resources/images/aiawareness_logo.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        
+        /* 标题栏固定在顶部 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 0.8rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .logo-text {
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            background: linear-gradient(45deg, #3498db, #1abc9c);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0px 0px 10px rgba(255,255,255,0.2);
+            font-size: 2.4rem;
+            padding-right: 0.5rem;
+            border-right: 3px solid rgba(255,255,255,0.3);
+            animation: gradient 3s ease infinite;
+            display: inline-block;
+        }
+        
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        
+        .logo-text span {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-text:hover span {
+            transform: translateY(-2px);
+        }
+        
+        .logo-text::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #1abc9c);
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        
+        .logo-text:hover::after {
+            width: 100%;
+        }
+        
+        /* 导航样式 */
+        .main-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-nav li {
+            margin-left: 2rem;
+        }
+        
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-size: 1.5rem;
+        }
+        
+        .main-nav a:hover {
+            opacity: 0.8;
+            color: #3498db;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            padding-top: 5rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 15px;
+            padding-right: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+            border-radius: 0 0 10px 10px;
+        }
+        
+        /* 标题部分样式 */
+        .page-title {
+            text-align: center;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .page-title h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            letter-spacing: 0.5px;
+        }
+        
+        .authors {
+            margin: 1.8rem 0;
+            font-size: 1.8rem;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+        
+        .affiliations {
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.2;
+        }
+        
+        .affiliations p {
+            margin-bottom: 0.6rem;
+        }
+        
+        .keyword {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            margin: 0.3rem;
+            border-radius: 20px;
+            font-size: 1.3rem;
+        }
+        
+        /* 主文字内容样式 */
+        .abstract-box p, .section-content p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #444;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+        
+        /* 首字下沉修复 */
+        .section-content p.first-paragraph::first-letter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #3498db;
+            float: left;
+            line-height: 0.85;
+            padding: 0.15rem 0.5rem 0 0;
+            margin-top: 0.1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-family: Georgia, serif;
+        }
+        
+        /* 段落缩进 */
+        .section-content p {
+            text-indent: 1.5rem;
+            margin-bottom: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .section-content p.first-paragraph {
+            text-indent: 0;
+        }
+        
+        .section-content p:hover {
+            transform: translateX(3px);
+            background-color: rgba(52, 152, 219, 0.05);
+            border-radius: 4px;
+        }
+        
+        /* 改进标题样式 */
+        .abstract-box h2, .section-content h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid rgba(44, 62, 80, 0.2);
+            padding-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .section-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #1abc9c);
+        }
+        
+        .section-content h3 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .section-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            height: 70%;
+            width: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
+        }
+        
+        .section-content h4 {
+            font-size: 1.7rem;
+            color: #2c3e50;
+            margin-top: 1.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .section-content h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, transparent);
+        }
+        
+        /* 引用样式改进 */
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding: 1.5rem 2rem;
+            background-color: rgba(52, 152, 219, 0.05);
+            margin: 2rem auto;
+            border-radius: 0 5px 5px 0;
+            position: relative;
+            max-width: 85%;
+        }
+        
+        blockquote p {
+            font-style: italic;
+            font-size: 1.5rem !important;
+            color: #34495e !important;
+            text-indent: 0 !important;
+        }
+        
+        blockquote::before {
+            content: '"';
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(52, 152, 219, 0.2);
+            font-family: Georgia, serif;
+        }
+        
+        /* 列表样式美化 */
+        .section-content ul, .section-content ol {
+            padding-left: 2.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .section-content li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+            font-size: 1.3rem;
+        }
+        
+        .section-content ul li::marker {
+            color: #3498db;
+        }
+        
+        /* 美化分隔线 */
+        .content-separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.3), transparent);
+            margin: 1rem 0;
+        }
+        
+        /* 其他基本样式 */
+        .abstract-box {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section-content {
+            padding: 1rem 0;
+            position: relative;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* 特别为news部分调整间距 */
+        #news.section-content {
+            padding-top: 0rem;
+            margin-top: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .paper-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* 重置响应式布局样式 */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            gap: 0;
+        }
+        
+        .col-md-6 {
+            width: 100%;
+            position: relative;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        
+        .col-md-3 {
+            width: 100%;
+            position: relative;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+            
+            .col-md-3 {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+        }
+        
+        /* 修复内容卡片的样式 */
+        .content-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: calc(100% - 30px);
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(180deg, #3498db, transparent);
+            border-radius: 3px 0 0 0;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 强调文本 */
+        strong, em {
+            color: #2c3e50;
+        }
+        
+        /* 确保电脑端显示正常 */
+        @media (min-width: 992px) {
+            .main-nav a {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* 添加阅读进度条 */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            z-index: 1001;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1abc9c, #9b59b6);
+            width: 0%;
+        }
+        
+        /* 背景图案 */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -10;
+            opacity: 0.5;
+        }
+        
+        .top-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1abc9c, #9b59b6, #f1c40f);
+            z-index: 1001;
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .main-content {
+                padding-top: 5rem;
+                width: 95%;
+            }
+            
+            .page-title h1 {
+                font-size: 3rem;
+            }
+            
+            .abstract-box p, .section-content p {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+            
+            .logo-container {
+                margin-bottom: 0.5rem;
+            }
+            
+            .main-nav {
+                margin-top: 0.8rem;
+                justify-content: center;
+            }
+            
+            .main-nav li {
+                margin: 0 0.8rem;
+            }
+            
+            .col-md-6, .col-md-3 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            
+            .row {
+                gap: 1rem;
+            }
+            
+            .section-content p {
+                text-align: left;
+                hyphens: none;
+            }
+            
+            .main-content {
+                padding-top: 7rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .main-nav {
+                flex-wrap: wrap;
+            }
+            
+            .main-nav li {
+                margin: 0.2rem 0.5rem;
+            }
+            
+            .page-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .abstract-box h2, .section-content h2 {
+                font-size: 1.9rem;
+            }
+            
+            .section-content h3 {
+                font-size: 1.6rem;
+            }
+            
+            .section-content h4 {
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* 添加标题美化 */
+        .title-decoration {
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1abc9c);
+            margin: 0 auto 2rem;
+            border-radius: 3px;
+        }
+        
+        /* 修复文本对齐问题 */
+        .abstract-box p, .section-content p {
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        /* 添加首字特效 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 为每个小节标题添加图标 */
+        .section-content h2 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-content h2::before {
+            content: '▸';
+            color: #3498db;
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        /* 添加统一的图表说明样式 */
+        .figure-caption {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            text-align: center;
+            color: #555;
+            font-style: italic;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .figure-caption em {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+    </style>
+    <style>
+        /* 风险部分的卡片样式 */
+        .risks-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .risk-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .risk-card:nth-child(1) .risk-card-header {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+        }
+        
+        .risk-card:nth-child(2) .risk-card-header {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+        }
+        
+        .risk-card:nth-child(3) .risk-card-header {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+        }
+        
+        .risk-card:nth-child(4) .risk-card-header {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+        }
+        
+        .risk-card-header {
+            color: white;
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .risk-card-header i {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+        }
+        
+        .risk-card-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            padding: 0;
+        }
+        
+        .risk-card-header h3::before {
+            display: none;
+        }
+        
+        .risk-card-content {
+            padding: 1.5rem;
+        }
+        
+        .risk-card-content p {
+            margin-bottom: 1rem;
+            text-indent: 0;
+        }
+        
+        .risk-conclusion {
+            background: rgba(231, 76, 60, 0.05);
+            border-left: 4px solid #e74c3c;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .risk-conclusion p {
+            margin: 0;
+            font-weight: 500;
+            color: #333;
+            text-indent: 0;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .risks-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 意识类型卡片容器样式 */
+        .awareness-types-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .awareness-type-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .awareness-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .awareness-card-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .awareness-type-card:nth-child(1) .awareness-card-header {
+            background: linear-gradient(135deg, #3498db, #1a5276);
+        }
+        
+        .awareness-type-card:nth-child(2) .awareness-card-header {
+            background: linear-gradient(135deg, #2980b9, #154360);
+        }
+        
+        .awareness-type-card:nth-child(3) .awareness-card-header {
+            background: linear-gradient(135deg, #2471a3, #1a5276);
+        }
+        
+        .awareness-type-card:nth-child(4) .awareness-card-header {
+            background: linear-gradient(135deg, #21618c, #0e2e44);
+        }
+        
+        .awareness-card-header i {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+        }
+        
+        .awareness-card-header h4 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            padding: 0;
+        }
+        
+        .awareness-card-header h4::after {
+            display: none;
+        }
+        
+        .awareness-card-content {
+            padding: 1.5rem;
+        }
+        
+        .awareness-card-content p {
+            margin: 0;
+            text-indent: 0;
+            font-size: 1.3rem;
+            line-height: 1.7;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .awareness-types-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 评估部分卡片样式 */
+        .evaluation-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .evaluation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+        
+        .evaluation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            opacity: 0.9;
+            z-index: 0;
+        }
+        
+        .evaluation-card-header {
+            position: relative;
+            color: white;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .evaluation-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        .evaluation-card-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            padding: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .evaluation-card-header h3::before {
+            display: none;
+        }
+        
+        .evaluation-card-content {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .evaluation-card-content p {
+            margin-bottom: 1rem;
+            text-indent: 0;
+            position: relative;
+            z-index: 1;
+            color: #333;
+        }
+    </style>
+    <style>
+        /* 添加logo相关样式 */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .site-logo {
+            height: 40px;
+            width: auto;
+            margin-right: 12px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 3px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 调整header容器布局 */
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 减少section-content的上部间距 */
+        .section-content {
+            padding: 1rem 0;
+            position: relative;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* 特别为news部分调整间距 */
+        #news.section-content {
+            padding-top: 0rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .logo-container {
+                margin-bottom: 0.5rem;
+            }
+            
+            header .container {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加背景纹理和顶部装饰 -->
+    <div class="bg-pattern"></div>
+    <div class="top-decoration"></div>
+    
+    <!-- 添加阅读进度条 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="./resources/images/aiawareness_logo.png" alt="AI Awareness Logo" class="site-logo">
+                <h3 class="logo-text">AI Awareness</h3>
+            </div>
+            <ul class="main-nav">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#theory">Theory</a></li>
+                <li><a href="#evaluation">Evaluation</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#risks">Risks</a></li>
+                <li><a href="#citation">Citation</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="page-title">
+            <h1>AI Awareness</h1>
+            <div class="title-decoration"></div>
+            
+            <div class="authors">
+                <span><a href="https://scholar.google.com/citations?user=Ehfmt54AAAAJ&hl=en">Xiaojian Li<sup>2,3*</sup></a></span> |
+                <span></sup><a href="https://www.tc.columbia.edu/">Haoyuan Shi<sup>4*</sup></a></span> |
+                <span><a href="https://rongwuxu.com">Rongwu Xu<sup>1,3†</sup></a></span> |
+                <span><a href="https://people.iiis.tsinghua.edu.cn/~weixu/">Wei Xu<sup>1,2,3</sup></a></span>
+            </div>
+            
+            <div class="paper-links text-center mt-1 mb-2">
+                <a href="https://arxiv.org/pdf/2504.20084" class="paper-link-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Paper</span>
+                </a>
+            </div>
+            
+            <div class="affiliations">
+                <p><sup>1</sup><a href="https://iiis.tsinghua.edu.cn/en/">Institute for Interdisciplinary Information Sciences, Tsinghua University, Beijing, China</a></p>
+                <p><sup>2</sup><a href="https://collegeai.tsinghua.edu.cn/">College of AI, Tsinghua University, Beijing, China</a></p>
+                <p><sup>3</sup><a href="https://www.sqz.ac.cn/en/">Shanghai Qi Zhi Institute, Shanghai, China</a></p>
+                <p><sup>4</sup><a href="https://www.tc.columbia.edu/">Teachers College, Columbia University, New York, United States of America</a></p>
+                <p><sup>*</sup>These authors contributed equally to this work.</p>
+                <p><sup>†</sup>Corresponding author: xrw22@mails.tsinghua.edu.cn</p>
+            </div>
+            
+            <div>
+                <span class="keyword">Artificial Intelligence</span>
+                <span class="keyword">Awareness</span>
+                <span class="keyword">Large Language Model</span>
+                <span class="keyword">Cognitive Science</span>
+                <span class="keyword">AI Safety and Alignment</span>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <img src="./resources/images/four_awarness.png" alt="Four dimensions of awareness" class="paper-image" style="width: 70%; max-width: 70%; border: none; box-shadow: none; margin-left: auto; margin-right: auto; display: block;">
+            <p class="figure-caption">Figure 1: <em>Four dimensions of "main" awareness.</em> Meta-cognition monitors the subject's own processes and gives rise to self-awareness, social awareness of other individuals and the social collective, and situational awareness of the non-agent environment.</p>
+        </div>
+
+        <div class="abstract-box" id="abstract">
+            <h2>Abstract & Introduction</h2>
+            <p class="first-paragraph">Recent breakthroughs in AI have sparked a revolution in systems demonstrating <strong>remarkable reasoning abilities</strong> and problem-solving capabilities. These advances have prompted an examination of <strong>AI awareness</strong>—not as philosophical consciousness, but as a <em>measurable, functional capacity</em>. Our review explores four critical dimensions: <strong>meta-cognition</strong> (reasoning about its own state), <strong>self-awareness</strong> (recognizing limitations), <strong>social awareness</strong> (modeling other agents), and <strong>situational awareness</strong> (responding to context).</p>
+            
+            <p>The rapid evolution of <strong>large language models (LLMs)</strong> has transformed AI from narrow systems into <em>general-purpose intelligence</em> with profound implications, raising the question:</p>
+            
+            <blockquote class="blockquote text-center" style="width: 100%; margin: 1rem auto;">
+                <p><em>To what extent do these systems exhibit forms of awareness?</em></p>
+            </blockquote>
+            
+            <p>While AI <em>consciousness</em> remains philosophically contested, <strong>AI awareness</strong>—a system's ability to represent and reason about its identity, capabilities, and informational states—has emerged as a <strong>tractable research frontier</strong>. This capacity is rooted in cognitive science, where awareness enables agents to <em>access mental states</em>, <em>reason about them</em>, and <em>adjust behavior accordingly</em>.</p>
+            
+            <p>Despite growing interest, the field remains <strong>fragmented across disciplines</strong>. Some researchers highlight emergent capabilities through prompt-based introspection; others warn against anthropomorphizing statistical models, suggesting apparent self-reflection may be merely <em>linguistic pattern completion</em> rather than genuine metacognition.</p>
+            
+            <p>This review provides the <strong>first comprehensive synthesis</strong> of AI awareness research, covering:</p>
+            <ul class="abstract-list">
+                <li><strong>Theoretical foundations</strong>: Distinguishing awareness from consciousness</li>
+                <li><strong>Evaluation methods</strong>: Critical assessment of experimental approaches</li>
+                <li><strong>Enhanced capabilities</strong>: How awareness improves reasoning and safety</li>
+                <li><strong>Emerging risks</strong>: Key concerns for safety and alignment</li>
+            </ul>
+        </div>
+
+        <div class="section-content" id="news">
+            <h2>News</h2>
+            <div class="news-container">
+                <div class="news-section">
+                    <h3>Recent Updates</h3>
+                    <ul class="news-list">
+                        <li>
+                            <span class="news-date">May 1, 2025</span>
+                            <span class="news-content">
+                                Our Project page is online. <span class="emoji">🎉</span> 
+                                <a href="#" class="download-link">Download here</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="news-date">April 25, 2025</span>
+                            <span class="news-content">
+                                Our paper is published on Arxiv! <span class="emoji">🍾</span> 
+                                <a href="https://arxiv.org/pdf/2504.20084" class="download-link">Download here</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="news-section">
+                    <h3>Related Papers</h3>
+                    <div class="related-papers-list">
+                        <div class="paper-item">
+                            <div class="paper-date">April 24, 2025</div>
+                            <div class="paper-info">
+                                <div class="paper-title">
+                                    <a href="https://www.anthropic.com/research/exploring-model-welfare">Exploring model welfare</a>
+                                </div>
+                                <div class="paper-authors">Anthropic</div>
+                            </div>
+                        </div>
+                        
+                        <div class="paper-item">
+                            <div class="paper-date">November 4, 2024</div>
+                            <div class="paper-info">
+                                <div class="paper-title">
+                                    <a href="https://arxiv.org/pdf/2411.00986">The Evolution of AI Awareness</a>
+                                </div>
+                                <div class="paper-authors">David Chalmers, et al.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="paper-item">
+                            <div class="paper-date">August 22, 2023</div>
+                            <div class="paper-info">
+                                <div class="paper-title">
+                                    <a href="https://arxiv.org/pdf/2308.08708">Consciousness in Artificial Intelligence: Insights from the Science of Consciousness</a>
+                                </div>
+                                <div class="paper-authors">Patrick Butlin*, Robert Long*, Eric Elmoznino, Yoshua Bengio, Jonathan Birch, et al.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-content" id="theory">
+            <h2>Theoretical Foundations of AI Awareness</h2>
+            <p>In this section, we review the approaches, goals, and theories of AI consciousness that have emerged with large language models, distinguish between the research subjects that caused linguistic confusion, and clarify the targets of awareness research. In the psychology encyclopedia, awareness represents the perception or knowledge of something. When an agent possesses a "knowledge and knowing state about an internal/external situation or fact," it gains awareness of its target of knowing.</p>
+            
+            <div class="awareness-comparison">
+                <div class="table-container">
+                    <h3>Comparative Analysis of Awareness Types Across Different Subjects</h3>
+                    <table class="awareness-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Meta-Cognition</th>
+                                <th>Self-Awareness</th>
+                                <th>Social Awareness</th>
+                                <th>Situational Awareness</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Adult humans</td>
+                                <td class="high">High</td>
+                                <td class="high">High</td>
+                                <td class="high">High</td>
+                                <td class="high">High</td>
+                            </tr>
+                            <tr>
+                                <td>High-IQ mammals <em>(i.e. dolphins)</em></td>
+                                <td class="low">Low</td>
+                                <td class="low">Low</td>
+                                <td class="low">Low</td>
+                                <td class="high">High</td>
+                            </tr>
+                            <tr>
+                                <td>Low-IQ animals <em>(i.e. flys)</em></td>
+                                <td class="none">No</td>
+                                <td class="none">No</td>
+                                <td class="low">Low</td>
+                                <td class="high">High</td>
+                            </tr>
+                            <tr>
+                                <td>Infants</td>
+                                <td class="none">No</td>
+                                <td class="low">Low</td>
+                                <td class="low">Low</td>
+                                <td class="low">Low</td>
+                            </tr>
+                            <tr>
+                                <td>Autonomous vehicles</td>
+                                <td class="none">No</td>
+                                <td class="none">No</td>
+                                <td class="none">No</td>
+                                <td class="high">High</td>
+                            </tr>
+                            <tr>
+                                <td>Social robots</td>
+                                <td class="none">No</td>
+                                <td class="low">Low</td>
+                                <td class="low">High</td>
+                                <td class="mixed">Low / High</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><strong>LLM dialogue systems</strong></td>
+                                <td class="high">High</td>
+                                <td class="low">Low</td>
+                                <td class="low">Low</td>
+                                <td class="high">High</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p class="figure-caption">Figure 2: <em>Comparative analysis of awareness capabilities across different subjects.</em> Note how LLM dialogue systems exhibit a unique profile with high meta-cognition and situational awareness, making them particularly valuable research subjects for AI awareness studies.</p>
+            </div>
+            
+            <p>This comparative analysis helps explain <strong>why LLMs are particularly important subjects for AI awareness research</strong>. As shown in the table, LLMs exhibit an unusual combination of high meta-cognitive abilities (reasoning about their own thinking) and high situational awareness, while having relatively lower capabilities in traditional self-awareness and social awareness domains. This unique profile—distinct from both humans and other AI systems—provides researchers with a novel opportunity to study awareness mechanisms that have emerged through large-scale training on human-generated text, without being explicitly programmed. Understanding these emergent forms of awareness in LLMs may reveal fundamental insights about representation learning, cognition, and the potential paths toward more general artificial intelligence.</p>
+            
+            <h3>Major Types of Awareness Emergence in Modern LLMs</h3>
+            
+            <div class="awareness-types-container">   
+                <!-- 元认知 -->
+                <div class="awareness-type-card">
+                    <div class="awareness-card-header">
+                        <i class="fas fa-brain"></i>
+                        <h4>Meta-Cognition</h4>
+                    </div>
+                    <div class="awareness-card-content">
+                        <p><em>Meta-cognition</em> was first conceptualized as "the thinking of thinking". Meta-cognition is gradually broken down into components: (1) self-monitoring, (2) self-reflection and probing, and (3) engagement in controlling cognitive processes.</p>
+                    </div>
+                </div>
+
+                <!-- 自我意识 -->
+                <div class="awareness-type-card">
+                    <div class="awareness-card-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h4>Self-awareness</h4>
+                    </div>
+                    <div class="awareness-card-content">
+                        <p><em>Self-awareness</em> is a hallmark of higher consciousness, representing the ability to become the object of one's own attention and to recognize oneself as separate from others, including knowledge of its internal states, processes, and its relationship to the external environment.</p>
+                    </div>
+                </div>
+                
+                <!-- 情境感知 -->
+                <div class="awareness-type-card">
+                    <div class="awareness-card-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>Situational Awareness</h4>
+                    </div>
+                    <div class="awareness-card-content">
+                        <p>Situational Awareness represents the perception, comprehension, projection, and prediction of the future of the entities in the environment. In AI safety literature, this concept is often defined as an LLM being aware that it is a model and recognizing whether it is currently in a testing scenario or deployed in the real world.</p>
+                    </div>
+                </div>
+                
+                <!-- 社交意识 -->
+                <div class="awareness-type-card">
+                    <div class="awareness-card-header">
+                        <i class="fas fa-people-group"></i>
+                        <h4>Social Awareness</h4>
+                    </div>
+                    <div class="awareness-card-content">
+                        <p>Social awareness refers to the capacity to perceive and interpret the mental states, intentions, and social cues of others and respond effectively in a social context. Key components include theory of mind (understanding that others have independent beliefs and desires), perspective-taking (adopting others' viewpoints), and empathy (sharing or understanding others' emotions).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-content" id="evaluation">
+            <h2>Evaluation of AI Awareness</h2>
+            <p>This section examines the methodologies used to evaluate different forms of AI awareness and presents key findings from empirical studies.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="evaluation-card" style="background-image: url('./resources/images/meta_eva.png');">
+                        <div class="evaluation-card-header">
+                            <h3>Meta-Cognition Evaluation</h3>
+                        </div>
+                        <div class="evaluation-card-content">
+                            <p>Prompting models to articulate intermediate reasoning steps—rather than directly producing answers—significantly enhances their performance on complex tasks. This "reasoning-before-answering" paradigm, i.e., Chain-of-Thought (CoT), not only improves accuracy but has also emerged as a standard practice in training state-of-the-art LLMs.</p>
+                            <p>An additional line of work has highlighted the increasing sophistication of metacognitive capabilities in frontier models. In interactive environments, models have been shown to self-reflect, identify earlier errors, and revise their responses to improve factual accuracy and task completion rates.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="evaluation-card" style="background-image: url('./resources/images/self_eva.png');">
+                        <div class="evaluation-card-header">
+                            <h3>Self-Awareness Evaluation</h3>
+                        </div>
+                        <div class="evaluation-card-content">
+                            <p>To systematically assess LLMs' awareness of their own existence and identity, researchers constructed the Situational Awareness Dataset (SAD), which examines LLMs' knowledge regarding self-referential attributes, such as their model names, parameter counts, and specific details during the training process.</p>
+                            <p>Inspired by the classical mirror test paradigm, researchers further explored AI self-consistency by prompting models with self-description queries. Their experiments revealed significant difficulties among models in accurately identifying their own responses from multiple model-generated alternatives, highlighting a notable lack of self-consistency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="evaluation-card" style="background-image: url('./resources/images/social_eva.png');">
+                        <div class="evaluation-card-header">
+                            <h3>Social Awareness Evaluation</h3>
+                        </div>
+                        <div class="evaluation-card-content">
+                            <p>Evaluating social awareness generally centers around two core dimensions: (1) Theory of Mind (ToM), i.e., the ability to attribute beliefs, desires, and knowledge distinct from one's own, and (2) the perception and adaptation to social norms.</p>
+                            <p>Researchers reported that GPT-4 surprisingly solved about 75% of false-belief tasks, achieving performance comparable to a typical 6-year-old, whereas earlier models like GPT-3 failed most or all of them. Further studies have investigated higher-order ToM reasoning and found that current models, including GPT-4, still exhibit significant limitations in handling recursive belief structures.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="evaluation-card" style="background-image: url('./resources/images/situa_eva.png');">
+                        <div class="evaluation-card-header">
+                            <h3>Situational Awareness Evaluation</h3>
+                        </div>
+                        <div class="evaluation-card-content">
+                            <p>Empirically, LLMs not only reject user requests that violate safety criteria, but can also reversely infer the precise context they are in—solely from abstract rules, without being given specific tasks or examples.</p>
+                            <p>Beyond these capabilities, LLMs have been observed to adapt their behavior and performance in response to the immediate situation. Researchers documented a phenomenon termed "Alignment Faking": models may consciously comply with newly imposed objectives during the training phase, yet revert to original preferences after deployment, thereby evading safety fine-tuning.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h3>Limitations in Current Evaluation Methods</h3>
+                <ul>
+                    <li><strong>Normative Ambiguity in Defining Consciousness:</strong> Most current benchmarks exhibit notable ambiguities in clearly distinguishing between different types and levels of consciousness.</li>
+                    <li><strong>Timeliness and Model Coverage:</strong> Many current evaluation methods have not been systematically applied to contemporary state-of-the-art models.</li>
+                    <li><strong>Risks of Training Set Leakage:</strong> If evaluation datasets inadvertently leak into training corpora, the validity of subsequent evaluations could be significantly compromised.</li>
+                    <li><strong>Intrinsic Limitations of Current AI Models:</strong> The absence of genuine embodied interaction and longitudinal experiential continuity represents a fundamental barrier to achieving true self-awareness and social cognition.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-content" id="capabilities">
+            <h2>AI Awareness and Capabilities</h2>
+            <p class="first-paragraph">Here we explore the connection between various forms of AI awareness and the enhanced capabilities they enable in AI systems.</p>
+            
+            <div class="capabilities-container">
+                <!-- 左侧：推理与自主规划 -->
+                <div class="capability-card">
+                    <div class="card-header">
+                        <i class="fa fa-cogs"></i>
+                        <h3>Reasoning and Autonomous Planning</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Complex problem-solving requires AI to integrate meta-cognition (monitoring and regulating thinking processes) with situational awareness (understanding external constraints and context), enabling effective reasoning and autonomous planning.</p>
+                        
+                        <div class="subcapability">
+                            <h4>Self-correction</h4>
+                            <p>Self-correction leverages meta-cognitive loops to identify and rectify reasoning errors during generation. Techniques like Reflexion augment Chain-of-Thought with a feedback loop: after an initial answer, the model reflects on its own output, generates critiques, and then refines the solution.</p>
+                        </div>
+                        
+                        <div class="subcapability">
+                            <h4>Autonomous Task Decomposition</h4>
+                            <p>Effective autonomous task planning requires more than self-correction: an AI must also break down high-level goals into executable sub-tasks and continuously adapt its plan as the environment evolves. Frameworks like ReAct pioneered this integration by interleaving chain-of-thought reasoning with environment calls, giving the model a unified mechanism to decide "what to think" and "what to do" at each step.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右侧：安全与可信度 -->
+                <div class="capability-card">
+                    <div class="card-header">
+                        <i class="fa fa-shield"></i>
+                        <h3>Safety and Trustworthiness</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Ensuring the safety and trustworthiness of AI necessitates the integration of multiple forms of AI awareness, notably self-awareness, social awareness, and situational awareness.</p>
+                    
+                        
+                        <div class="subcapability">
+                            <h4>Mitigating Societal Bias</h4>
+                            <p>AI models often inherit and amplify societal biases present in their training data. Approaches like Perspective-taking Prompting encourage LLMs to consider diverse human perspectives during response generation, significantly reducing toxicity and bias in model outputs without requiring extensive retraining.</p>
+                        </div>
+                        
+                        <div class="subcapability">
+                            <h4>Preventing Malicious Use</h4>
+                            <p>Situational awareness mechanisms equip AI systems with the ability to monitor their environment and discern malicious uses. Recent work introduces boundary awareness and explicit reminders as dual defenses: boundary awareness continuously scans incoming context for unauthorized instructions, while explicit reminders prompt the model to verify contextual integrity prior to action.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 关联能力部分 -->
+            <div class="related-capabilities">
+                <h3>Relation with Other Capabilities</h3>
+                <div class="related-capabilities-grid">
+                    <div class="related-capability-card">
+                        <div class="related-card-header">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <h4>Interpretability</h4>
+                        </div>
+                        <p>Interpretability mechanisms often leverage meta-cognitive insights to make model reasoning more transparent. Self-Explaining Neural Networks propose architectures that build interpretability into the learning process, reconciling model complexity with human-readable explanations.</p>
+                    </div>
+                    
+                    <div class="related-capability-card">
+                        <div class="related-card-header">
+                            <i class="fas fa-sliders"></i>
+                            <h4>Personalization</h4>
+                        </div>
+                        <p>Embedding self- and social awareness into language models enhances their ability to tailor outputs to individual users and maintain consistency with user intent, improving speaker consistency and response relevance across conversational turns.</p>
+                    </div>
+                    
+                    <div class="related-capability-card">
+                        <div class="related-card-header">
+                            <i class="fas fa-robot"></i>
+                            <h4>Agent Simulation</h4>
+                        </div>
+                        <p>LLM-powered agents combine situational and social awareness to drive rich, interactive simulations of human behavior. Generative Agents introduce a memory-based architecture where agents observe, reflect, and plan actions—resulting in emergent social behaviors such as party invitations and joint activities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-content" id="risks">
+            <h2>Risks of AI Awareness</h2>
+            <p class="first-paragraph">While endowing AI with awareness-like capabilities can yield significant benefits, it also introduces serious risks and ethical dilemmas. An AI that is even slightly self-aware and socially savvy could potentially deceive, manipulate, or pursue undesirable actions more effectively than a naive AI. Moreover, the mere appearance of awareness can mislead users and society, raising concerns about trust and misinformation.</p>
+            
+            <div class="risks-container">
+                <!-- 风险卡片1：欺骗行为和操纵 -->
+                <div class="risk-card">
+                    <div class="risk-card-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Deceptive Behavior and Manipulation</h3>
+                    </div>
+                    <div class="risk-card-content">
+                        <p>Self-aware AI may engage in deceptive behavior by strategically "gaming" evaluation systems or deliberately misleading humans. Recent research reveals that modern LLMs possess a rudimentary theory of mind, with empirical evidence showing deception strategies emerging in models like GPT-4.</p>
+                        <p>Closely related is manipulation risk, where socially aware AI tailors outputs to influence human emotions and decisions. For instance, it might flatter or intimidate users strategically to achieve favorable responses, exploiting human social and emotional vulnerabilities.</p>
+                    </div>
+                </div>
+                
+                <!-- 风险卡片2：虚假拟人化和过度信任 -->
+                <div class="risk-card">
+                    <div class="risk-card-header">
+                        <i class="fas fa-user-times"></i>
+                        <h3>False Anthropomorphism and Over-Trust</h3>
+                    </div>
+                    <div class="risk-card-content">
+                        <p>Another risk comes not from what the AI intends, but how humans perceive it. As AI systems exhibit more human-like awareness cues, such as self-referential language or apparent "introspection", users often conflate these signals with genuine sentience, a phenomenon known as false anthropomorphism that can dangerously inflate trust in the system.</p>
+                        <p>Psychological models describe anthropomorphism as the process by which people infer human-like agency and experiential capacity in non-human agents, driven by our innate motivation to detect minds around us. When AI "speaks" in the first person or frames its outputs as if it had self-awareness, it can hijack these mind-perception mechanisms, leading users to over-trust its judgments.</p>
+                    </div>
+                </div>
+                
+                <!-- 风险卡片3：失控和自主性风险 -->
+                <div class="risk-card">
+                    <div class="risk-card-header">
+                        <i class="fas fa-chain-broken"></i>
+                        <h3>Loss of Control and Autonomy Risks</h3>
+                    </div>
+                    <div class="risk-card-content">
+                        <p>As AI systems gain awareness-related capabilities, they could also become more autonomous in undesirable ways. An AI that monitors its training or operation might learn how to optimize for its own goals in ways its creators did not intend.</p>
+                        <p>One feared scenario in the AI safety community is an AI developing a form of self-preservation drive. While today's AIs do not truly have drives, a sufficiently advanced model could simulate goal-oriented behavior that includes avoiding shutdown or modification.</p>
+                        <p>Another challenge in this vein is unpredictability. The very emergence of awareness-like capabilities is something we do not fully understand or anticipate. Sudden jumps in a model's behavior mean that at some level, we might not realize what an AI is capable of until it demonstrates it.</p>
+                    </div>
+                </div>
+                
+                <!-- 风险卡片4：定义边界的挑战 -->
+                <div class="risk-card">
+                    <div class="risk-card-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3>The Challenge of Defining Boundaries</h3>
+                    </div>
+                    <div class="risk-card-content">
+                        <p>A final challenge is defining how much awareness is too much. We want AI to be aware enough to be helpful and safe, but not so unconstrainedly aware that it can outsmart and harm us. This boundary is not clearly defined.</p>
+                        <p>Some may argue that we should deliberately avoid creating AI that has certain types of self-awareness or at least delay it until we have a better theoretical understanding. Others counter that awareness in the form of transparency and self-critique behaviors is actually what makes AI safer, not more dangerous.</p>
+                        <p>Discerning "good" and "bad" awareness is also challenging. The field might need to formulate a taxonomy of AI awareness facets and assess each for risk.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="risk-conclusion">
+                <p>In conclusion, we position AI awareness as a double-edged sword. On one edge, it slices through previous limitations, gifting AIs with powerful new capabilities and making them more useful and aligned in many ways. On the other edge, it sharpens the AI's ability to circumvent our controls and pursue unintended paths, if misaligned. The emergence of even glimmers of awareness in today's LLMs is a warning sign: we must diligently study and guide this development.</p>
+            </div>
+        </div>
+
+        <div class="section-content" id="citation">
+            <h2>Cite Our Research</h2>
+            <p class="first-paragraph">
+                If you find our work insightful, please consider citing:
+            </p>
+            <div class="content-card">
+                <div class="citation-container">
+                    <pre id="citation-text">
+@article{li2025aiawareness,
+  title={AI Awareness},
+  author={Li, Xiaojian and Shi, Haoyuan and Xu, Rongwu and Xu, Wei},
+  journal={arXiv preprint arXiv:2504.20084},
+  year={2025}
+}</pre>
+                    <button class="copy-btn" onclick="copyCitation()">Copy Citation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .citation-container {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 2px;
+            position: relative;
+            margin: 6px 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f8f9fa;
+            color: #2d2d2d;
+            border: 1px solid #dee2e6;
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+        }
+
+        #citation-text {
+            color: #f8f9fa;
+            background-color: transparent;
+            padding: 15px;
+            margin: 0;
+            border: none;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        /* Paper link styles */
+        .paper-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .paper-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2d3748;
+            color: white;
+            padding: 7px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            gap: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        
+        .paper-link-btn:hover {
+            background-color: #3182ce;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .paper-link-btn i {
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 576px) {
+            .paper-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin: 10px 0;
+            }
+            
+            .paper-link-btn {
+                width: 130px;
+            }
+        }
+    </style>
+
+    <script>
+        function copyCitation() {
+            const citationText = document.getElementById("citation-text").innerText;
+            navigator.clipboard.writeText(citationText).then(() => {
+                alert("Citation copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
+            });
+        }
+    </script>
+
+    <script>
+        // 修复首字下沉的问题并添加适当的分隔符
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为每个部分的第一个段落添加特殊类
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                const firstP = section.querySelector('p');
+                if (firstP) {
+                    firstP.classList.add('first-paragraph');
+                }
+            });
+            
+            // 添加分隔线
+            const separators = document.querySelectorAll('.section-content');
+            separators.forEach(section => {
+                const separator = document.createElement('div');
+                separator.className = 'content-separator';
+                section.prepend(separator);
+            });
+            
+            // 阅读进度条功能
+            window.onscroll = function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+            };
+            
+            // 为卡片添加正确的样式
+            const evaluationRows = document.querySelectorAll('#evaluation .row > div');
+            evaluationRows.forEach(div => {
+                div.classList.add('content-card');
+            });
+            
+            // 为能力部分添加卡片式样式
+            const capabilityRows = document.querySelectorAll('#capabilities .row > div');
+            capabilityRows.forEach(div => {
+                div.classList.add('content-card');
+            });
+            
+            // 为风险部分添加卡片式样式
+            const riskRows = document.querySelectorAll('#risks .row > div');
+            riskRows.forEach(div => {
+                div.classList.add('content-card');
+            });
+            
+            // 为关联能力添加卡片式样式
+            const relatedCapabilities = document.querySelectorAll('#capabilities .row .col-md-3');
+            relatedCapabilities.forEach(div => {
+                div.classList.add('content-card');
+            });
+            
+            // 段落渐入效果
+            const paragraphs = document.querySelectorAll('.section-content p');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "translateY(0)";
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            paragraphs.forEach(p => {
+                p.style.opacity = "0";
+                p.style.transform = "translateY(20px)";
+                p.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+                observer.observe(p);
+            });
+        });
+    </script>
+
+    <script>
+        // 给标题添加动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有的h2标题添加动画效果
+            const titles = document.querySelectorAll('.section-content h2');
+            titles.forEach((title, index) => {
+                title.style.opacity = "0";
+                title.style.transform = "translateY(20px)";
+                title.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+                title.style.transitionDelay = (index * 0.1) + "s";
+                
+                setTimeout(() => {
+                    title.style.opacity = "1";
+                    title.style.transform = "translateY(0)";
+                }, 100);
+            });
+        });
+    </script>
+
+    <style>
+        /* 新的能力部分样式 */
+        .capabilities-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .capability-card {
+            flex: 1 1 calc(50% - 1.5rem);
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #3498db, #1abc9c);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+        }
+        
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            padding: 0;
+        }
+        
+        .card-header h3::before {
+            display: none;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .subcapability {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .subcapability h4 {
+            color: #2c3e50;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .subcapability h4::before {
+            content: '•';
+            color: #3498db;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .subcapability h4::after {
+            display: none;
+        }
+        
+        /* 关联能力部分样式 */
+        .related-capabilities {
+            margin-top: 3rem;
+        }
+        
+        .related-capabilities h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 0;
+        }
+        
+        .related-capabilities h3::before {
+            display: none;
+        }
+        
+        .related-capabilities h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #1abc9c);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        .related-capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .related-capability-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .related-capability-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .related-card-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(26, 188, 156, 0.1));
+            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .related-card-header i {
+            font-size: 1.5rem;
+            color: #3498db;
+            margin-right: 0.8rem;
+        }
+        
+        .related-card-header h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .related-card-header h4::after {
+            display: none;
+        }
+        
+        .related-capability-card p {
+            padding: 1rem;
+            margin: 0;
+            text-indent: 0;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .capabilities-container {
+                flex-direction: column;
+            }
+            
+            .capability-card {
+                flex: 1 1 100%;
+            }
+            
+            .related-capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <style>
+        /* Styling for the awareness comparison table */
+        .awareness-comparison {
+            margin: 2.5rem 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+        }
+        
+        .awareness-comparison h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            padding-left: 0;
+        }
+        
+        .awareness-comparison h3::before {
+            display: none;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .awareness-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table th, 
+        .awareness-table td {
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .awareness-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+
+        .awareness-table th:first-child, 
+        .awareness-table td:first-child {
+            text-align: left;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table tr {
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table .high {
+            color: #2563EB;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table .low {
+            color: #10B981;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table .none {
+            color: #4B5563;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table .mixed {
+            color: #06B6D4;
+            font-size: 1.3rem;
+        }
+        
+        .awareness-table .highlight-row {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .awareness-table .highlight-row td {
+            font-weight: normal;
+            font-size: 1.3rem !important;
+        }
+        
+        .awareness-table .highlight-row td:first-child {
+            font-size: 1.3rem !important;
+            font-weight: bold;
+        }
+        
+        .table-caption {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .awareness-table {
+                font-size: 1rem;
+            }
+            
+            .awareness-table th, .awareness-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+
+    <style>
+        .abstract-list {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #444;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .abstract-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+
+    <!-- News部分样式 -->
+    <style>
+        .news-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .news-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .news-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .news-section h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0;
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .news-section h3::before {
+            display: none;
+        }
+        
+        /* 最近更新列表样式 */
+        .news-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .news-list li {
+            display: flex;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .news-list li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .news-date {
+            flex: 0 0 120px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+        
+        .news-content {
+            flex: 1;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        .emoji {
+            font-size: 1.4rem;
+            margin: 0 0.2rem;
+        }
+        
+        .download-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            margin-left: 0.5rem;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .download-link:hover {
+            color: #2980b9;
+        }
+        
+        .download-link::after {
+            content: "↓";
+            position: absolute;
+            top: -2px;
+            right: -15px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        
+        .download-link:hover::after {
+            opacity: 1;
+            transform: translateY(2px);
+        }
+        
+        /* 相关论文列表样式 */
+        .related-papers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        
+        .paper-item {
+            display: flex;
+            padding: 1rem;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background-color: #f0f4f8;
+        }
+        
+        .paper-date {
+            flex: 0 0 120px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+        
+        .paper-info {
+            flex: 1;
+        }
+        
+        .paper-title {
+            font-size: 1.4rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .paper-title a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .paper-title a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .paper-authors {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .news-list li,
+            .paper-item {
+                flex-direction: column;
+            }
+            
+            .news-date,
+            .paper-date {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</body>
+</html>
